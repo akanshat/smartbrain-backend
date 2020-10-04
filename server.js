@@ -3,11 +3,14 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
 const knex= require('knex');
+require('dotenv').config();
 
 const register =  require('./controllers/register');
 const signin =  require('./controllers/login');
 const profile = require('./controllers/profile');
 const image =  require('./controllers/image');
+
+const port = process.env.PORT || 4000;
 
 const db = knex({
     client: 'pg',
@@ -42,7 +45,7 @@ app.put('/image',(req, res) =>{image.handleImage(req, res, db)});
 
 app.post('/imageurl',(req, res) =>{image.handleApiCall(req, res)});
 
-app.listen(process.env.PORT || 4000, ()=> {
+app.listen(port || 4000, ()=> {
     console.log(`app is running on port ${process.env.PORT}`);
 });
 
